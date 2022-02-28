@@ -3,17 +3,22 @@ import { HStack, VStack, Text, Button } from '@chakra-ui/react';
 
 import DatePicker from 'components/DatePicker';
 import { PopoverList } from 'components/PopoverList';
+import { parseDateToApi } from 'utils/helpers';
 
 interface Props {
   gateways: Gateway[];
   projects: Project[];
+  onClickGenReport(params: CreateReportsParams): void;
 }
 
 export const Header = (props: Props) => {
-  const { gateways, projects } = props;
+  const { gateways, projects, onClickGenReport } = props;
 
   const [gatewaysFilter, setGatewaysFilter] = useState<ListItem[]>([]);
   const [projectsFilter, setProjectsFilter] = useState<ListItem[]>([]);
+
+  const [gatewayId, setGatewayId] = useState('');
+  const [projectId, setProjectId] = useState('');
   const [fromDate, setFromDate] = useState<Date | null>(null);
   const [toDate, setToDate] = useState<Date | null>(null);
 
@@ -23,7 +28,12 @@ export const Header = (props: Props) => {
       value: gateway.gatewayId,
     }));
 
-    setGatewaysFilter(newGatewaysFilter);
+    const allGateways: ListItem = {
+      label: 'All gateways',
+      value: '',
+    };
+
+    setGatewaysFilter([allGateways, ...newGatewaysFilter]);
   }, [gateways]);
 
   useEffect(() => {
@@ -32,7 +42,12 @@ export const Header = (props: Props) => {
       value: project.projectId,
     }));
 
-    setProjectsFilter(newProjectsFilter);
+    const allProjects: ListItem = {
+      label: 'All projects',
+      value: '',
+    };
+
+    setProjectsFilter([allProjects, ...newProjectsFilter]);
   }, [projects]);
 
   const handleChangeFromDate = (date: Date | null) => {
@@ -41,6 +56,25 @@ export const Header = (props: Props) => {
 
   const handleChangeToDate = (date: Date | null) => {
     setToDate(date);
+  };
+
+  const handleSelectProject = (id: string) => {
+    setProjectId(id);
+  };
+
+  const handleSelectGateway = (id: string) => {
+    setGatewayId(id);
+  };
+
+  const handleGenerateReport = () => {
+    const reportParams: CreateReportsParams = {
+      gatewayId: gatewayId || undefined,
+      projectId: projectId || undefined,
+      fromDate: fromDate ? parseDateToApi(fromDate) : undefined,
+      toDate: toDate ? parseDateToApi(toDate) : undefined,
+    };
+
+    onClickGenReport(reportParams);
   };
 
   return (
@@ -55,9 +89,9 @@ export const Header = (props: Props) => {
       </VStack>
 
       <HStack spacing="1rem">
-        <PopoverList items={projectsFilter} />
+        <PopoverList items={projectsFilter} onChange={handleSelectProject} />
 
-        <PopoverList items={gatewaysFilter} />
+        <PopoverList items={gatewaysFilter} onChange={handleSelectGateway} />
 
         <DatePicker
           selectedDate={fromDate}
@@ -71,7 +105,7 @@ export const Header = (props: Props) => {
           buttonText="To date"
         />
 
-        <Button colorScheme="blue" size="sm">
+        <Button colorScheme="blue" size="sm" onClick={handleGenerateReport}>
           Generate report
         </Button>
       </HStack>

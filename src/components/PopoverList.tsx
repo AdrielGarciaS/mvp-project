@@ -32,8 +32,10 @@ export const PopoverList = (props: Props) => {
   };
 
   useEffect(() => {
-    handleSelect(items?.[0])();
-  }, [items?.[0]]);
+    if (!items?.length) return;
+
+    handleSelect(items[0])();
+  }, [items?.length]);
 
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
