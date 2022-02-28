@@ -1,8 +1,7 @@
 import { Flex, Stack, Img, Avatar, Text } from '@chakra-ui/react';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-// import { getUsers } from 'repositories/auth';
+import { getUsers } from 'repositories/auth';
 
 interface UserData extends User {
   fullName: string;
@@ -13,9 +12,9 @@ export const Header = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const response = await axios.get('/api/users');
+      const response = await getUsers();
 
-      const userData = response.data[0];
+      const userData = response[0];
 
       const newUserData: UserData = {
         ...userData,

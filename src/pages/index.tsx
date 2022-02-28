@@ -42,31 +42,25 @@ export default function Home() {
       };
 
       if (gatewaysResponse.status === 'fulfilled') {
-        const gatewaysMap = gatewaysResponse.value.data.reduce(
-          (acc, gateway) => {
-            if (acc[gateway.gatewayId]) return acc;
+        const gatewaysMap = gatewaysResponse.value.reduce((acc, gateway) => {
+          if (acc[gateway.gatewayId]) return acc;
 
-            return { ...acc, [gateway.gatewayId]: gateway.name };
-          },
-          {},
-        );
+          return { ...acc, [gateway.gatewayId]: gateway.name };
+        }, {});
 
         newProjectsAndGatewaysMap.gateways = gatewaysMap;
-        setGateways(gatewaysResponse.value.data);
+        setGateways(gatewaysResponse.value);
       }
 
       if (projectsResponse.status === 'fulfilled') {
-        const projectsMap = projectsResponse.value.data.reduce(
-          (acc, project) => {
-            if (acc[project.projectId]) return acc;
+        const projectsMap = projectsResponse.value.reduce((acc, project) => {
+          if (acc[project.projectId]) return acc;
 
-            return { ...acc, [project.projectId]: project.name };
-          },
-          {},
-        );
+          return { ...acc, [project.projectId]: project.name };
+        }, {});
 
         newProjectsAndGatewaysMap.projects = projectsMap;
-        setProjects(projectsResponse.value.data);
+        setProjects(projectsResponse.value);
       }
 
       setProjectsAndGatewaysMap(newProjectsAndGatewaysMap);
@@ -78,7 +72,7 @@ export default function Home() {
   const generateReport = async (params: CreateReportsParams) => {
     const response = await createReports(params);
 
-    const newReports = response.data.map<ProjectGateway>(report => {
+    const newReports = response.map<ProjectGateway>(report => {
       return {
         ...report,
         projectName: projectsAndGatewaysMap.projects[report.projectId],
