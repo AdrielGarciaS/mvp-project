@@ -12,7 +12,7 @@ export const Layout = (props: Props) => {
   const { children } = props;
 
   return (
-    <Flex maxWidth="1440px" h="100vh">
+    <Flex maxWidth="1440px" h="100vh" mx="auto">
       <VStack w="full" h="full">
         <Header />
 
