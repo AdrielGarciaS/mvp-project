@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import ReactDatePicker from 'react-datepicker';
 
 import { TriggerButton } from './TriggerButton';
@@ -16,12 +17,14 @@ export const DatePicker = (props: Props) => {
   };
 
   return (
-    <ReactDatePicker
-      selected={selectedDate}
-      onChange={onChange}
-      showPopperArrow
-      customInput={<TriggerButton text={buttonText} onClickClear={onClear} />}
-    />
+    <Box>
+      <ReactDatePicker
+        selected={selectedDate}
+        onChange={onChange}
+        showPopperArrow
+        customInput={<TriggerButton text={buttonText} onClickClear={onClear} />}
+      />
+    </Box>
   );
 };
 
