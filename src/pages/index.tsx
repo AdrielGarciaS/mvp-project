@@ -1,5 +1,6 @@
 import { VStack } from '@chakra-ui/react';
 import { Header } from 'modules/reports/components/Header';
+import { NoReportData } from 'modules/reports/components/NoReportData';
 import { Report } from 'modules/reports/components/Report';
 import { useEffect, useState } from 'react';
 import { createReports, getGateways, getProjects } from 'repositories/report';
@@ -134,10 +135,11 @@ export default function Home() {
     }`;
   };
 
-  const hasData = Boolean(reports.length);
+  const hasData = Boolean(filter) && Boolean(reports.length);
+  const hasNoData = Boolean(filter) && !reports.length;
 
   return (
-    <VStack>
+    <VStack h="full">
       <Header
         projects={projects}
         gateways={gateways}
@@ -145,6 +147,8 @@ export default function Home() {
       />
 
       {hasData && <Report reports={reports} title={getFilterTitle()} />}
+
+      {hasNoData && <NoReportData />}
     </VStack>
   );
 }
