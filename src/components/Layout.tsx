@@ -26,7 +26,9 @@ export const Layout = (props: Props) => {
         >
           <Sidebar />
 
-          <Box w="full">{children}</Box>
+          <Box w="full" pr="2.5625rem">
+            {children}
+          </Box>
         </HStack>
       </VStack>
     </Flex>

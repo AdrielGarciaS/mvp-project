@@ -29,7 +29,7 @@
         "react/jsx-one-expression-per-line": "off",
         "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/exhaustive-deps": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading" : "off",
@@ -38,6 +38,7 @@
         "import/no-duplicates": "off",
         "@typescript-eslint/camelcase": "off",
         "react/function-component-definition": "off",
+        "react/require-default-props": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "import/extensions": [
             "error",
