@@ -1,3 +1,8 @@
+interface User {
+  firstName: string;
+  lastName: string;
+}
+
 interface Gateway {
   gatewayId: string;
   name: string;
