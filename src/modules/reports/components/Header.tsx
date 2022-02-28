@@ -8,7 +8,7 @@ import { parseDateToApi } from 'utils/helpers';
 interface Props {
   gateways: Gateway[];
   projects: Project[];
-  onClickGenReport(params: CreateReportsParams): void;
+  onClickGenReport(params: CreateReportsParams): Promise<void>;
 }
 
 export const Header = (props: Props) => {
@@ -21,6 +21,8 @@ export const Header = (props: Props) => {
   const [projectId, setProjectId] = useState('');
   const [fromDate, setFromDate] = useState<Date | null>(null);
   const [toDate, setToDate] = useState<Date | null>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const newGatewaysFilter = gateways.map(gateway => ({
@@ -66,7 +68,7 @@ export const Header = (props: Props) => {
     setGatewayId(id);
   };
 
-  const handleGenerateReport = () => {
+  const handleGenerateReport = async () => {
     const reportParams: CreateReportsParams = {
       gatewayId: gatewayId || undefined,
       projectId: projectId || undefined,
@@ -74,7 +76,9 @@ export const Header = (props: Props) => {
       toDate: toDate ? parseDateToApi(toDate) : undefined,
     };
 
-    onClickGenReport(reportParams);
+    setIsLoading(true);
+    await onClickGenReport(reportParams);
+    setIsLoading(false);
   };
 
   return (
@@ -105,7 +109,12 @@ export const Header = (props: Props) => {
           buttonText="To date"
         />
 
-        <Button colorScheme="blue" size="sm" onClick={handleGenerateReport}>
+        <Button
+          isLoading={isLoading}
+          colorScheme="blue"
+          size="sm"
+          onClick={handleGenerateReport}
+        >
           Generate report
         </Button>
       </HStack>
