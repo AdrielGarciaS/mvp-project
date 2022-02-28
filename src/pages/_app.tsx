@@ -1,12 +1,14 @@
-import { ChakraProvider, Flex } from '@chakra-ui/react';
 import { AppProps } from 'next/app';
+import { ChakraProvider } from '@chakra-ui/react';
+
+import { Layout } from 'components/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
-      <Flex maxWidth="1440px">
+      <Layout>
         <Component {...pageProps} />
-      </Flex>
+      </Layout>
     </ChakraProvider>
   );
 }
