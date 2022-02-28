@@ -72,8 +72,8 @@ export const Header = (props: Props) => {
     const reportParams: CreateReportsParams = {
       gatewayId: gatewayId || undefined,
       projectId: projectId || undefined,
-      fromDate: fromDate ? parseDateToApi(fromDate) : undefined,
-      toDate: toDate ? parseDateToApi(toDate) : undefined,
+      from: fromDate ? parseDateToApi(fromDate) : undefined,
+      to: toDate ? parseDateToApi(toDate) : undefined,
     };
 
     setIsLoading(true);
@@ -82,8 +82,8 @@ export const Header = (props: Props) => {
   };
 
   return (
-    <HStack>
-      <VStack align="flex-start" justify="space-between" w="full">
+    <HStack align="flex-start" w="full" justify="space-between">
+      <VStack align="flex-start">
         <Text fontSize="1.5rem" fontWeight="700" color="rgba(1, 31, 75, 1)">
           Reports
         </Text>

@@ -16,6 +16,28 @@ interface ListItem {
 interface CreateReportsParams {
   gatewayId?: string;
   projectId?: string;
-  fromDate?: string;
-  toDate?: string;
+  from?: string;
+  to?: string;
+}
+
+interface Report {
+  projectId: string;
+  amount: number;
+  paymentId: string;
+  gatewayId: string;
+  created: string;
+}
+
+interface ProjectGateway extends Report {
+  projectName: string;
+  gatewayName: string;
+  formattedAmount: string;
+  formattedDate: string;
+}
+
+interface ReportItem {
+  projectId: string;
+  projectName: string;
+  gateways: ProjectGateway[];
+  formattedTotalAmount: string;
 }

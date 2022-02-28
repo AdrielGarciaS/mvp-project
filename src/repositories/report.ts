@@ -13,7 +13,7 @@ export const getProjects = async () => {
 };
 
 export const createReports = async (params: CreateReportsParams) => {
-  const response = await api.post('/report', params);
+  const response = await api.post<{ data: Report[] }>('/report', params);
 
   return response.data;
 };

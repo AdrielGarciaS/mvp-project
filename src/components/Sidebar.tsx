@@ -16,6 +16,7 @@ export const Sidebar = () => {
     <VStack px="2.1875rem" spacing="1.5rem">
       {menuItems.map(({ name, iconSrc, path }) => (
         <IconButton
+          key={name}
           aria-label={`${name}-button`}
           bg="transparent"
           variant={pathname === path ? 'outline' : 'ghost'}
