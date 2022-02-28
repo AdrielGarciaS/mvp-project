@@ -1,6 +1,6 @@
 import { Header } from 'modules/reports/components/Header';
 import { useEffect, useState } from 'react';
-import { getGateways, getProjects } from 'repositories/report';
+import { createReports, getGateways, getProjects } from 'repositories/report';
 
 export default function Home() {
   const [gateways, setGateways] = useState<Gateway[]>([]);
@@ -25,5 +25,17 @@ export default function Home() {
     loadPageData();
   }, []);
 
-  return <Header projects={projects} gateways={gateways} />;
+  const generateReport = async (params: CreateReportsParams) => {
+    const data = await createReports(params);
+
+    console.log(data);
+  };
+
+  return (
+    <Header
+      projects={projects}
+      gateways={gateways}
+      onClickGenReport={generateReport}
+    />
+  );
 }

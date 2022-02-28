@@ -11,3 +11,9 @@ export const getProjects = async () => {
 
   return response.data;
 };
+
+export const createReports = async (params: CreateReportsParams) => {
+  const response = await api.post('/report', params);
+
+  return response.data;
+};
