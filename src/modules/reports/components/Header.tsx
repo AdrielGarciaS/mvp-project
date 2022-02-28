@@ -1,6 +1,8 @@
-import { HStack, VStack, Text } from '@chakra-ui/react';
-import { PopoverList } from 'components/PopoverList';
 import { useEffect, useState } from 'react';
+import { HStack, VStack, Text, Button } from '@chakra-ui/react';
+
+import DatePicker from 'components/DatePicker';
+import { PopoverList } from 'components/PopoverList';
 
 interface Props {
   gateways: Gateway[];
@@ -12,6 +14,8 @@ export const Header = (props: Props) => {
 
   const [gatewaysFilter, setGatewaysFilter] = useState<ListItem[]>([]);
   const [projectsFilter, setProjectsFilter] = useState<ListItem[]>([]);
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const newGatewaysFilter = gateways.map(gateway => ({
@@ -31,6 +35,14 @@ export const Header = (props: Props) => {
     setProjectsFilter(newProjectsFilter);
   }, [projects]);
 
+  const handleChangeFromDate = (date: Date | null) => {
+    setFromDate(date);
+  };
+
+  const handleChangeToDate = (date: Date | null) => {
+    setToDate(date);
+  };
+
   return (
     <HStack>
       <VStack align="flex-start" justify="space-between" w="full">
@@ -42,10 +54,26 @@ export const Header = (props: Props) => {
         </Text>
       </VStack>
 
-      <HStack spacing="1.5rem">
+      <HStack spacing="1rem">
         <PopoverList items={projectsFilter} />
 
         <PopoverList items={gatewaysFilter} />
+
+        <DatePicker
+          selectedDate={fromDate}
+          onChange={handleChangeFromDate}
+          buttonText="From date"
+        />
+
+        <DatePicker
+          selectedDate={toDate}
+          onChange={handleChangeToDate}
+          buttonText="To date"
+        />
+
+        <Button colorScheme="blue" size="sm">
+          Generate report
+        </Button>
       </HStack>
     </HStack>
   );
