@@ -23,6 +23,7 @@ interface Filter {
 export default function Home() {
   const [gateways, setGateways] = useState<Gateway[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [reports, setReports] = useState<ReportItem[]>([]);
   const [filter, setFilter] = useState<Filter | null>(null);
   const [projectsAndGatewaysMap, setProjectsAndGatewaysMap] = useState(
@@ -31,10 +32,13 @@ export default function Home() {
 
   useEffect(() => {
     const loadPageData = async () => {
+      setIsLoading(true);
       const [gatewaysResponse, projectsResponse] = await Promise.allSettled([
         getGateways(),
         getProjects(),
       ]);
+
+      setIsLoading(false);
 
       const newProjectsAndGatewaysMap: ProjectsAndGatewaysMap = {
         projects: {},
@@ -137,6 +141,7 @@ export default function Home() {
       <Header
         projects={projects}
         gateways={gateways}
+        isLoadingPopoverData={isLoading}
         onClickGenReport={generateReport}
       />
 

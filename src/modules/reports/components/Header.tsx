@@ -9,10 +9,11 @@ interface Props {
   gateways: Gateway[];
   projects: Project[];
   onClickGenReport(params: CreateReportsParams): Promise<void>;
+  isLoadingPopoverData: boolean;
 }
 
 export const Header = (props: Props) => {
-  const { gateways, projects, onClickGenReport } = props;
+  const { gateways, projects, onClickGenReport, isLoadingPopoverData } = props;
 
   const [gatewaysFilter, setGatewaysFilter] = useState<ListItem[]>([]);
   const [projectsFilter, setProjectsFilter] = useState<ListItem[]>([]);
@@ -93,9 +94,17 @@ export const Header = (props: Props) => {
       </VStack>
 
       <HStack spacing="1rem">
-        <PopoverList items={projectsFilter} onChange={handleSelectProject} />
+        <PopoverList
+          items={projectsFilter}
+          onChange={handleSelectProject}
+          isLoading={isLoadingPopoverData}
+        />
 
-        <PopoverList items={gatewaysFilter} onChange={handleSelectGateway} />
+        <PopoverList
+          items={gatewaysFilter}
+          onChange={handleSelectGateway}
+          isLoading={isLoadingPopoverData}
+        />
 
         <DatePicker
           selectedDate={fromDate}
@@ -111,6 +120,7 @@ export const Header = (props: Props) => {
 
         <Button
           isLoading={isLoading}
+          disabled={isLoadingPopoverData}
           colorScheme="blue"
           size="sm"
           onClick={handleGenerateReport}

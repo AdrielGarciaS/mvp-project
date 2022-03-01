@@ -16,10 +16,11 @@ import { TriangleDownIcon } from '@chakra-ui/icons';
 interface Props {
   onChange?(value: string): void;
   items: ListItem[];
+  isLoading?: boolean;
 }
 
 export const PopoverList = (props: Props) => {
-  const { onChange, items } = props;
+  const { onChange, items, isLoading } = props;
 
   const [selected, setSelected] = useState<ListItem>(items?.[0]);
 
@@ -42,11 +43,12 @@ export const PopoverList = (props: Props) => {
       <PopoverTrigger>
         <Button
           colorScheme="teal"
+          isLoading={isLoading}
           rightIcon={<TriangleDownIcon />}
           size="sm"
           onClick={onToggle}
           minW="8rem"
-          justifyContent="space-between"
+          justifyContent={!isLoading ? 'space-between' : 'center'}
         >
           {selected?.label}
         </Button>
