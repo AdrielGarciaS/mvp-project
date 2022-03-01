@@ -2,7 +2,7 @@ import { Img, Text, VStack } from '@chakra-ui/react';
 
 export const NoReportData = () => {
   return (
-    <VStack justify="center" align="center" h="full" w="full">
+    <VStack justify="center" align="center" h="60vh" w="full">
       <VStack maxW="30rem">
         <Text fontWeight="700" fontSize="1.5rem" color="rgba(1, 31, 75, 1)">
           No reports
